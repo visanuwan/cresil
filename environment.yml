@@ -1,0 +1,31 @@
+name: cresil_rc10
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.8
+  - pip
+  - biopython
+  - minimap2
+  - mappy
+  - python-intervaltree
+  - tqdm
+  - pandas
+  - jedi
+  - ipykernel
+  - pysam
+  - pybedtools
+  - openjdk
+  - python-graphviz
+  - matplotlib
+  - networkx
+  - samtools
+  - bioawk
+  - parallel
+  - igvtools
+  - bedtools
+  - nanofilt
+  - tabix
+  - bcftools
+  - medaka
+  - mosdepth
