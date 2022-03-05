@@ -329,6 +329,32 @@ def prepare_identify_seq(tup_value):
 
     return list_tup_result
 
+def get_a_sequence(fa_path):
+    seq = ''
+    for record in SeqIO.parse(fa_path, "fasta"):
+        seq = str(record.seq)
+    return seq
+
+def assemToGFA(tup_value):
+    fa_path, tup_ = tup_value
+    ec_id, assembly_len, coverage, eccdna_status = tup_
+    seq = get_a_sequence(fa_path)
+    
+    gfaS = []
+    gfaL = []
+    if eccdna_status == "cyclic":
+        gfaS.append(f"S\t{ec_id}\t{seq}\tLN:i:{assembly_len}\tdp:f:{coverage}")
+        gfaL.append(f"L\t{ec_id}\t+\t{ec_id}\t+\t0M")
+    else:
+        gfaS.append(f"S\t{ec_id}\t{seq}\tLN:i:{assembly_len}\tdp:f:{coverage}")
+
+    write_path = "{}/{}.gfa".format(str(pathlib.Path(fa_path).parent), str(pathlib.Path(fa_path).stem))
+    with open(write_path, 'w') as outf:
+        for s in gfaS:
+            outf.write(f"{s}\n")
+        for l in gfaL:
+            outf.write(f"{l}\n")
+
 def dist_work(cmd):
     process = subprocess.call("{}".format(cmd), shell=True)
 
@@ -343,8 +369,11 @@ def argparser():
                             help="Number of threads [all CPU cores]",
                             type=int, default=0)
     general.add_argument('-s', "--skip-variant", dest='skipvariant',
-                            help="skip sequence correction and variant calling steps",
+                            help="skip sequence correction and variant calling steps [False]",
                             action='store_true')
+    general.add_argument('-sg', "--skip-gfa", dest='skipgfa',
+                            help="skip creating GFA files for each eccDNA (effective without -s) [False]",
+                            action='store_false')
     general.add_argument('-fa', "--fa-ref", dest='faref',
                             help="reference sequence .fasta",
                             type=str, default=None)
@@ -377,6 +406,7 @@ def main(args):
     adj_threads = max(4, int(threads / 4))
     bed_threads = max(4, int(threads / 5))
     skipvariant = args.skipvariant
+    skipgfa = args.skipgfa
     fastaRef = args.faref
     chromSizes = args.fai
     fastaName = args.fqinput
@@ -902,6 +932,57 @@ def main(args):
     eccdna_final_path = "{}/eccDNA_final.txt".format(bname)
     df_identify_summary.to_csv(eccdna_final_path, sep='\t', index=None)
 
+    if skipgfa:
+        ## create GFA files
+        ct = datetime.datetime.now()
+        print("[{}] creating GFA files".format(ct), flush=True)
+
+        list_tup_value = []
+        iter_ = 100
+        counter = 0
+        for index, value in df_identify_summary.iterrows():
+            counter += 1
+
+            if counter % iter_ == 0:
+                ct = datetime.datetime.now()
+                print("[{}] {}".format(ct, counter), flush=True)
+
+            if counter % iter_ == 0:
+
+                ec_id = value['id']
+                assembly_len = value['consensus_len']
+                coverage = value['coverage']
+                eccdna_status = value['eccdna_status']
+                tup_ = (ec_id, assembly_len, coverage, eccdna_status)
+
+                fa_path = "{}/{}/{}_consensus.fa".format(assemGraph, ec_id, ec_id)
+
+                tup_value = (fa_path, tup_)
+                list_tup_value.append(tup_value)
+
+                pool = Pool(processes = threads)
+                exit_codes = pool.map(assemToGFA, list_tup_value)
+                pool.close()
+                pool.join()
+
+                list_tup_value = []
+            else:
+                ec_id = value['id']
+                assembly_len = value['consensus_len']
+                coverage = value['coverage']
+                eccdna_status = value['eccdna_status']
+                tup_ = (ec_id, assembly_len, coverage, eccdna_status)
+
+                fa_path = "{}/{}/{}_consensus.fa".format(assemGraph, ec_id, ec_id)
+
+                tup_value = (fa_path, tup_)
+                list_tup_value.append(tup_value)
+
+        if len(list_tup_value) > 0:
+            pool = Pool(processes = threads)
+            exit_codes = pool.map(assemToGFA, list_tup_value)
+            pool.close()
+            pool.join()
+
     ct = datetime.datetime.now()
     print("[{}] finished identifying process\n".format(ct), flush=True)
-
