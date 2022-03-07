@@ -1,4 +1,4 @@
-name: cresil_rc10
+name: cresil
 channels:
   - conda-forge
   - bioconda
