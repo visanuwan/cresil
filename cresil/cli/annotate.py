@@ -246,7 +246,7 @@ def argparser():
     parser = ArgumentParser(
         formatter_class=ArgumentDefaultsHelpFormatter,
         add_help=False,
-        description='Identified eccDNA annotation')
+        description='Annotate identified eccDNA')
     general = parser.add_argument_group(title='General options')
     general.add_argument('-t', "--threads",
                             help="Number of threads [all CPU cores]",

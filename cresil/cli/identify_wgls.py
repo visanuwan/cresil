@@ -310,7 +310,7 @@ def argparser():
     parser = ArgumentParser(
         formatter_class=ArgumentDefaultsHelpFormatter,
         add_help=False,
-        description='eccDNA identification : WGLS')
+        description='Identify and verify eccDNA from whole-genome long-read (WGLS) sequencing data')
     general = parser.add_argument_group(title='General options')
     general.add_argument('-t', "--threads",
                             help="Number of threads [all CPU cores]",

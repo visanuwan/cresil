@@ -166,7 +166,7 @@ def argparser():
     parser = ArgumentParser(
         formatter_class=ArgumentDefaultsHelpFormatter,
         add_help=False,
-        description='Identified eccDNA visualization')
+        description='Generate Circos configuration files for specified eccDNA')
     general = parser.add_argument_group(title='General options')
     general.add_argument('-t', "--threads",
                             help="Number of threads [all CPU cores]",

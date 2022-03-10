@@ -29,3 +29,4 @@ dependencies:
   - bcftools
   - medaka
   - mosdepth
+  - circos

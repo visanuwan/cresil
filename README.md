@@ -1,10 +1,10 @@
 # CReSIL - Construction based Rolling-circle-amplification for eccDNA Sequence Identification and Location 
 
-Python scripts and pipeline for detecting eccDNA from Nanopore reads
+A tool for detecting eccDNA from Nanopore reads
 
 
 
-* Creating an environment with commands:
+## Installation instructions
     ```bash
     ## Install Conda environment
     cd cresil
@@ -15,35 +15,50 @@ Python scripts and pipeline for detecting eccDNA from Nanopore reads
 
     ## Install CReSIL
     pip install .
-
-    ## Run CReSIL
-    cresil -h
-    cresil trim -h
-    cresil identify -h
-    cresil annotate -h
-    cresil visualize -h
     ```
-    
-* Run CReSIL:
+
+## Testing (Human eccDNA)
     ```bash
     ## Go to an example folder
     cd example
     
     ## Run trim 
-    cresil trim -t 4 -i exp_reads.fastq -r hg19.25chr.mmi -o cresil_result
+    cresil trim -t 4 -fq exp_reads.fastq -r reference.mmi -o cresil_result
 
     ## Run eccDNA identification [enrichment dataset]
     cresil identify -t 4 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
 
     ## Run eccDNA identification [whole-genome long-read sequencing dataset]
-    cresil identify_wgls -t 4 -r hs19.25chr.mmi -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
+    cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
 
     ## Run eccDNA annotation
     cresil annotate -t 4 -rp reference.rmsk.bed -cg reference.cpg.bed -gb reference.gene.bed -identify cresil_result/eccDNA_final.txt
 
-    ## Run visualize eccDNA
+    ## Run visualize eccDNA (ec1)
     cresil visualize -t 4 -c ec1 -identify cresil_result/eccDNA_final.txt
 
-    ## Run Circos
-    circos -noparanoid -conf circos
+    ## Run Circos (ec1)
+    cd cresil_result/for_Circos/ec1
+    circos -noparanoid -conf circos.conf
     ```
+
+## Interface
+ - `cresil trim` - find and trim potential eccDNA regions from ONT reads
+ - `cresil identify` - identify and verify eccDNA from enriched data
+ - `cresil identify_wgls` - identify and verify eccDNA from whole-genome long-read (WGLS) sequencing data
+ - `cresil annotate` - annotate identified eccDNA
+ - `cresil visualize` - generate Circos configuration files for specified eccDNA
+
+## Sample data
+[References and simulated data](https://app.box.com/s/5leixacmp1xx8qs7qtcuyz93lgqpzgkn) for the user to go through the example of CReSIL pipeline and used in the CReSIL benchmarks.
+- References
+- Simulated data
+
+## Citation
+Please cite the following article if you use CReSIL in your research
+> Accurate Identification of Extrachromosomal Circular DNA from Long Read Sequences.<br>
+> Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard A Tané, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew</br>
+
+## License and Copyright
+
+CReSIL is distributed under the terms of the MIT License

@@ -429,7 +429,7 @@ def argparser():
     parser = ArgumentParser(
         formatter_class=ArgumentDefaultsHelpFormatter,
         add_help=False,
-        description='ONT read trimming')
+        description='Find and trim potential eccDNA regions from ONT reads')
     general = parser.add_argument_group(title='General options')
     general.add_argument('-fq', "--fq-input",  dest='fqinput',
                             help="input fasta/fastq",
