@@ -5,42 +5,46 @@ A tool for detecting eccDNA from Nanopore reads
 
 
 ## Installation instructions
-    ```bash
-    ## Install Conda environment
-    cd cresil
-    conda env create -f environment.yml
+```
+## Install Conda environment
+cd cresil
+conda env create -f environment.yml
 
-    ## Activate CReSIL environment
-    conda activate cresil
+## Activate CReSIL environment
+conda activate cresil
 
-    ## Install CReSIL
-    pip install .
-    ```
+## Install CReSIL
+pip install .
+```
 
 ## Testing (Human eccDNA)
-    ```bash
-    ## Go to an example folder
-    cd example
-    
-    ## Run trim 
-    cresil trim -t 4 -fq exp_reads.fastq -r reference.mmi -o cresil_result
+```
+## Go to an example folder
+cd example
 
-    ## Run eccDNA identification [enrichment dataset]
-    cresil identify -t 4 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
+## Run trim 
+cresil trim -t 4 -fq exp_reads.fastq -r reference.mmi -o cresil_result
 
-    ## Run eccDNA identification [whole-genome long-read sequencing dataset]
-    cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
+## Run eccDNA identification for enriched data
+cresil identify -t 4 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
 
-    ## Run eccDNA annotation
-    cresil annotate -t 4 -rp reference.rmsk.bed -cg reference.cpg.bed -gb reference.gene.bed -identify cresil_result/eccDNA_final.txt
+## Run eccDNA annotation
+cresil annotate -t 4 -rp reference.rmsk.bed -cg reference.cpg.bed -gb reference.gene.bed -identify cresil_result/eccDNA_final.txt
 
-    ## Run visualize eccDNA (ec1)
-    cresil visualize -t 4 -c ec1 -identify cresil_result/eccDNA_final.txt
+## Run visualize eccDNA (ec1)
+cresil visualize -t 4 -c ec1 -identify cresil_result/eccDNA_final.txt
 
-    ## Run Circos (ec1)
-    cd cresil_result/for_Circos/ec1
-    circos -noparanoid -conf circos.conf
-    ```
+## Run Circos (ec1)
+cd cresil_result/for_Circos/ec1
+circos -noparanoid -conf circos.conf
+```
+
+To use CReSIL to identify eccDNA in whole-genome long-read (WGLS) sequencing data
+
+```
+## Run eccDNA identification for whole-genome long-read (WGLS) sequencing data
+cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
+```
 
 ## Interface
  - `cresil trim` - find and trim potential eccDNA regions from ONT reads
