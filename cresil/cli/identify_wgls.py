@@ -623,6 +623,7 @@ def main(args):
         start = row.bg_start
         end = row.bg_end
         end_size = check_ovl_size if minsize >= 200 else int(round(minsize * 0.3, 0))
+        end_size = end_size if end_size >= 15 else 15
         end5.write("{}\n".format("\t".join(map(str, [chrom, start, int(start) + end_size]))))
         end3.write("{}\n".format("\t".join(map(str, [chrom, int(end) - end_size, end]))))
     end5.close()
