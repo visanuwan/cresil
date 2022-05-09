@@ -386,6 +386,9 @@ def argparser():
     general.add_argument('-trim', "--trim-input", dest='triminput',
                             help="CReSIL trim table",
                             type=str, default=None)
+    general.add_argument('-minsize', "--minimum-eccdna-size", dest='minsize',
+                            help="minimum size of eccDNA [200]",
+                            type=int, default=200)
     general.add_argument('-ovl', "--ovl-size", dest='ovlsize',
                             help="size of 5' and 3' regions on reads for a breakpiont overlapping check [50]",
                             type=int, default=50)
@@ -410,6 +413,7 @@ def main(args):
     fastaRef = args.faref
     chromSizes = args.fai
     fastaName = args.fqinput
+    minsize = args.minsize
     check_ovl_size = args.ovlsize
     breakpointdepth = args.breakpointdepth
     regiondepth = args.averagedepth
@@ -488,7 +492,7 @@ def main(args):
     merge_bg_filt = merge_bg_filt.loc[:,['bg_chrom','bg_start','bg_end','depth','length','mergeid']]
 
     # filter regions with the length >= 200 bp
-    merge_bg_filt = merge_bg_filt[merge_bg_filt['length'] >= 200]
+    merge_bg_filt = merge_bg_filt[merge_bg_filt['length'] >= minsize]
 
     ## Identify potential eccDNA regions ################################
 
@@ -526,7 +530,7 @@ def main(args):
         chrom = row.bg_chrom
         start = row.bg_start
         end = row.bg_end
-        end_size = check_ovl_size
+        end_size = check_ovl_size if minsize >= 200 else int(round(minsize * 0.3, 0))
         end5.write("{}\n".format("\t".join(map(str, [chrom, start, int(start) + end_size]))))
         end3.write("{}\n".format("\t".join(map(str, [chrom, int(end) - end_size, end]))))
     end5.close()
