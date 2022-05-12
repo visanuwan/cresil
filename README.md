@@ -1,4 +1,4 @@
-# CReSIL - Construction based Rolling-circle-amplification for eccDNA Sequence Identification and Location 
+# CReSIL - Construction-based Rolling-circle amplification for eccDNA Sequence Identification and Location
 
 A tool for detecting eccDNA from Nanopore reads
 
