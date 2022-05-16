@@ -208,13 +208,15 @@ def get_gene_annotate(tup_record):
         df_test_query = pd.DataFrame([(chrom, chromStart, chromEnd)], columns=['chrom', 'chromStart', 'chromEnd'])
 
         query  = pybedtools.BedTool.from_dataframe(df_test_query)
-        
-        list_cols = ['chrom','chromStart','chromEnd','name','score','strand','thickStart', 'thickEnd','itemRgb','blockCount', 'blockSize','blockStart']
-        df_overlap_temp = pd.read_table(target.intersect(query, u=False, wa=True).fn, header=None, names=list_cols)
-        df_overlap_temp.dropna(inplace=True)
+
+        df_overlap_temp = pd.read_table(target.intersect(query, u=False, wa=True).fn, header=None)
+        df_overlap_temp = df_overlap_temp[~df_overlap_temp.isnull().any(axis=1)]
+        df_overlap_temp.reset_index(drop=True, inplace=True)
         
         if len(df_overlap_temp) > 0:
-            
+            list_cols = ['chrom','chromStart','chromEnd','name','score','strand','thickStart', 'thickEnd','itemRgb','blockCount', 'blockSize','blockStart']
+            df_overlap_temp.columns = list_cols
+
             df_ovl_exon_intron = get_match_intron_exon(df_overlap_temp, chromStart, chromEnd, query)
 
             if len(df_ovl_exon_intron) > 0:
