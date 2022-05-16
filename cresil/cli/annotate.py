@@ -213,7 +213,7 @@ def get_gene_annotate(tup_record):
         df_overlap_temp = df_overlap_temp[~df_overlap_temp.isnull().any(axis=1)]
         df_overlap_temp.reset_index(drop=True, inplace=True)
         
-        if len(df_overlap_temp) > 0:
+        if len(df_overlap_temp) > 0 and df_overlap_temp.shape[1] == 12:
             list_cols = ['chrom','chromStart','chromEnd','name','score','strand','thickStart', 'thickEnd','itemRgb','blockCount', 'blockSize','blockStart']
             df_overlap_temp.columns = list_cols
 
