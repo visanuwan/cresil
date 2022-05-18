@@ -60,7 +60,7 @@ cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fa
 
 ## Citation
 Please cite the following article if you use CReSIL in your research
-> Accurate Identification of Extrachromosomal Circular DNA from Long Read Sequences.<br>
+> Construction-based Rolling-circle amplification for eccDNA Sequence Identification and Location.<br>
 > Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard A Tané, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew</br>
 
 ## License and Copyright
