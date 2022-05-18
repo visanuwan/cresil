@@ -203,20 +203,34 @@ def get_gene_annotate(tup_record):
     list_result = []
         
     chrom, chromStart, chromEnd, id_, seqSize, eccSize, eccdna_status, freq = tup_record
-
+    
     try:
         df_test_query = pd.DataFrame([(chrom, chromStart, chromEnd)], columns=['chrom', 'chromStart', 'chromEnd'])
 
         query  = pybedtools.BedTool.from_dataframe(df_test_query)
 
-        df_overlap_temp = pd.read_table(target.intersect(query, u=False, wa=True).fn, header=None)
-        df_overlap_temp = df_overlap_temp[~df_overlap_temp.isnull().any(axis=1)]
-        df_overlap_temp.reset_index(drop=True, inplace=True)
+        intersect_result = target.intersect(query, u=False, wa=True)
         
-        if len(df_overlap_temp) > 0 and df_overlap_temp.shape[1] == 12:
-            list_cols = ['chrom','chromStart','chromEnd','name','score','strand','thickStart', 'thickEnd','itemRgb','blockCount', 'blockSize','blockStart']
-            df_overlap_temp.columns = list_cols
-
+        list_records = []
+        if os.stat(intersect_result.fn).st_size > 0:
+            with open(intersect_result.fn, 'r') as f:
+                for line in f:
+                    list_line = line.strip().split('\t')
+                    if len(list_line) == 12:
+                        list_records.append(list_line)
+        
+        list_cols = ['chrom','chromStart','chromEnd','name','score','strand','thickStart', 'thickEnd','itemRgb','blockCount', 'blockSize','blockStart']
+        df_overlap_temp = pd.DataFrame(list_records, columns=list_cols)
+        
+        if len(df_overlap_temp) > 0:
+            df_overlap_temp['chromStart'] = df_overlap_temp['chromStart'].astype('int')
+            df_overlap_temp['chromEnd'] = df_overlap_temp['chromEnd'].astype('int')
+            df_overlap_temp['score'] = df_overlap_temp['score'].astype('int')
+            df_overlap_temp['thickStart'] = df_overlap_temp['thickStart'].astype('int')
+            df_overlap_temp['thickEnd'] = df_overlap_temp['thickEnd'].astype('int')
+            df_overlap_temp['itemRgb'] = df_overlap_temp['itemRgb'].astype('int')
+            df_overlap_temp['blockCount'] = df_overlap_temp['blockCount'].astype('int')
+            
             df_ovl_exon_intron = get_match_intron_exon(df_overlap_temp, chromStart, chromEnd, query)
 
             if len(df_ovl_exon_intron) > 0:
