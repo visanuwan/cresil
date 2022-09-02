@@ -60,8 +60,7 @@ cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fa
 
 ## Citation
 Please cite the following article if you use CReSIL in your research
-> Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard A Tané, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew. (in press).</br>
-> Construction-based Rolling-circle amplification for eccDNA Sequence Identification and Location. *Briefings in Bioinformatics*<br>
+> Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard A Tané, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew. (in press). CReSIL: Accurate Identification of Extrachromosomal Circular DNA from Long-read Sequences. *Briefings in Bioinformatics*<br>
 
 ## License and Copyright
 
