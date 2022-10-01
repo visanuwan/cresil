@@ -38,7 +38,7 @@ cresil visualize -t 4 -c ec1 -identify cresil_result/eccDNA_final.txt
 cd cresil_result/for_Circos/ec1
 circos -noparanoid -conf circos.conf
 ```
-\
+
 The structure of files and directories generated from CReSIL is as follows:
 
 ```
@@ -66,7 +66,7 @@ cresil_result
         ├── data
         └── tmp
 ```
-For more detail about mapped reads to each eccDNA, please see the eccDNA folder in **assemGraph**.
+For more details about mapped reads for each eccDNA, please see the eccDNA folder in **assemGraph**.
 \
 \
 To use CReSIL to identify eccDNA in whole-genome long-read (WGLS) sequencing data
