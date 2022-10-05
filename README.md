@@ -42,29 +42,29 @@ circos -noparanoid -conf circos.conf
 The structure of files and directories generated from CReSIL is as follows:
 
 ```
-cresil_result
+cresil_result/
 ├── trim.txt
 ├── eccDNA_final.txt
-├── cresil_run
+├── cresil_run/
 │   ├── subGraphs.summary.txt
-│   ├── tmp
-│   └── assemGraph
-│       ├── ec1
-│       ├── ec2
+│   ├── tmp/
+│   └── assemGraph/
+│       ├── ec1/
+│       ├── ec2/
 │       └── ..
-├── cresil_gAnnotation
+├── cresil_gAnnotation/
 │   ├── gene.annotate.txt
 │   ├── CpG.annotate.txt
 │   ├── repeat.annotate.txt
 │   └── variant.annotate.txt
-└── for_Circos
-    └── ec1
+└── for_Circos/
+    └── ec1/
         ├── circos.conf
         ├── ticks.conf
         ├── ideogram.conf
         ├── karyotype.conf
-        ├── data
-        └── tmp
+        ├── data/
+        └── tmp/
 ```
 For more details about mapped reads for each eccDNA, please see the eccDNA folder in **assemGraph**.
 \
@@ -90,7 +90,7 @@ cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fa
 
 ## Citation
 Please cite the following article if you use CReSIL in your research
-> Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard Arrey, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew. (in press). CReSIL: Accurate Identification of Extrachromosomal Circular DNA from Long-read Sequences. *Briefings in Bioinformatics.*<br>
+> Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard Arrey, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew, CReSIL: Accurate Identification of Extrachromosomal Circular DNA from Long-read Sequences, *Briefings in Bioinformatics.* 2022;, bbac422, https://doi.org/10.1093/bib/bbac422.<br>
 
 ## License and Copyright
 
