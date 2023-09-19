@@ -68,16 +68,16 @@ cresil_result/
 ```
 For more details about mapped reads for each eccDNA, please see the eccDNA folder in **assemGraph**.
 
-## Extra
+## Additional useful commands
 
-To run CReSIL to identify eccDNA in a relaxed mode
+To run CReSIL to identify eccDNA in a relaxed mode (from the trimming step)
 
 ```
-## Run eccDNA identification for the lowest possible cutoffs
+## Run eccDNA identification for with minimizing parameters (minimum size of eccDNA, average depth, number of supported breakpoints)
 cresil identify -t 4 -minrsize 40 -depth 1 -break 1 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
 ```
 
-To use CReSIL to identify eccDNA in whole-genome long-read (WGLS) sequencing data
+To use CReSIL to identify eccDNA in whole-genome long-read (WGLS) sequencing data (from the trimming step)
 
 ```
 ## Run eccDNA identification for whole-genome long-read (WGLS) sequencing data
