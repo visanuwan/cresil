@@ -174,7 +174,7 @@ def make_group_order(list_test, offset):
 
     for region_strand in list_test:
 
-        chrom, start, end, strand = region_strand.split('_')
+        chrom, start, end, strand = region_strand.rsplit('_', 3)
 
         if len(list_group) == 0:
 
