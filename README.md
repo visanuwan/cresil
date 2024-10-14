@@ -1,6 +1,10 @@
 # CReSIL: Accurate Identification of Extrachromosomal Circular DNA from Long-read Sequences
 
-A tool for detecting eccDNA from Nanopore reads
+CReSIL is a tool for detecting eccDNA from Nanopore reads.
+
+We are excited to release `V1.1.0`! This updates introduces R10 chemistries for sequence correction and variant calls, bug fixes, and overall performance improvement.
+
+For a version history/changelog, please see [Releases](https://github.com/visanuwan/cresil/releases).
 
 
 
@@ -26,7 +30,7 @@ cd example
 cresil trim -t 4 -fq exp_reads.fastq -r reference.mmi -o cresil_result
 
 ## Run eccDNA identification for enriched data
-cresil identify -t 4 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
+cresil identify -t 4 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -cm r941_min_hac_g507 -trim cresil_result/trim.txt
 
 ## Run eccDNA annotation
 cresil annotate -t 4 -rp reference.rmsk.bed -cg reference.cpg.bed -gb reference.gene.bed -identify cresil_result/eccDNA_final.txt
@@ -70,11 +74,18 @@ For more details about mapped reads for each eccDNA, please see the eccDNA folde
 
 ## Additional useful commands
 
+To run CReSIL to identify eccDNA without sequence correction and variant calling steps - skip mode (from the trimming step)
+
+```
+## Run eccDNA identification without sequence correction and variant calling steps
+cresil identify -t 4 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -cm r941_min_hac_g507 -s -trim cresil_result/trim.txt
+```
+
 To run CReSIL to identify eccDNA in a relaxed mode (from the trimming step)
 
 ```
-## Run eccDNA identification for with minimizing parameters (minimum size of eccDNA, average depth, number of supported breakpoints)
-cresil identify -t 4 -minrsize 40 -depth 1 -break 1 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -trim cresil_result/trim.txt
+## Run eccDNA identification with minimizing parameters (minimum size of eccDNA, average depth, number of supported breakpoints)
+cresil identify -t 4 -minrsize 40 -depth 1 -break 1 -fa reference.fa -fai reference.fa.fai -fq exp_reads.fastq -cm r941_min_hac_g507 -trim cresil_result/trim.txt
 ```
 
 To use CReSIL to identify eccDNA in whole-genome long-read (WGLS) sequencing data (from the trimming step)

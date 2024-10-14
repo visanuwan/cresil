@@ -3,7 +3,7 @@ from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 from cresil.cli import trim, identify, identify_wgls, annotate, visualize
 modules = ['trim','identify','identify_wgls','annotate','visualize']
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 
 def main():

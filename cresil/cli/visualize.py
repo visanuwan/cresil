@@ -28,7 +28,7 @@ def format_merge_based1_region(merge_based1_region):
 def lenLoci(loci):
     length = 0
     for region in loci.split(','):
-        chrom, start, end = region.split('_')[:3]
+        chrom, start, end = region.rsplit('_', 2)
         length += int(end)-int(start)
     return length
 
@@ -51,7 +51,7 @@ class mergedRegion(object):
             len_region = lenLoci(mod_region) + 1
             mod_end += len_region
 
-            chrom, start, end, strand = mod_region.split('_')
+            chrom, start, end, strand = mod_region.rsplit('_', 3)
             tup_mod_region = (chrom, int(start), int(end), strand, len_region, mod_start, mod_end)
             obj_ = modRegion(tup_mod_region)
             self.list_obj_region.append(obj_)
@@ -63,7 +63,7 @@ class mergedRegion(object):
 
     def cal_overlap_rel_region(self, based1_region):
         list_overlap_rel_region = []
-        q_chrom, q_start, q_end = based1_region.split('_')
+        q_chrom, q_start, q_end = based1_region.rsplit('_', 2)
         q_start = int(q_start)
         q_end = int(q_end)
         for obj_ in self.list_obj_region:

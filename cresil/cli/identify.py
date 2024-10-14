@@ -28,14 +28,14 @@ from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 def lenLoci(loci):
     length = 0
     for region in loci.split(','):
-        chrom, start, end = region.split('_')[:3]
+        chrom, start, end, strand = region.rsplit('_', 3)
         length += int(end)-int(start)
     return length
 
 def format_merge_region(merge_region):
     list_formatted = []
     for region in merge_region.split(','):
-        chrom, start, end, strand = region.split('_')
+        chrom, start, end, strand = region.rsplit('_', 3)
         list_formatted.append("{}:{}-{}_{}".format(chrom, int(start) + 1, end, strand))
     return ','.join(list_formatted)
 
@@ -144,7 +144,7 @@ def get_dict_weight_subgraph(directed_graph, chk_subgraph):
 def nodes_to_merge_regions(list_nodes):
     list_merge_regions = []
     for node in list_nodes:
-        chr_, start_, end_ = node.split('_')
+        chr_, start_, end_ = node.rsplit('_', 2)
         region_ = "{}:{}-{}".format(chr_, int(start_) + 1, end_)
         list_merge_regions.append(region_)
     return ','.join(list_merge_regions)
@@ -295,7 +295,7 @@ def prepare_identify_seq(tup_value):
     with open(ref_fasta_path, 'w') as w_f:
         w_f.write(">{}\n".format(gname))
         for node in merge_region.split(','):
-            chr_, start_, end_, strand_ = node.split('_')
+            chr_, start_, end_, strand_ = node.rsplit('_', 3)
             chr_ = str(chr_)
             if strand_ == '-':
                 seq_ += str(Seq(fa_ref.fetch(chr_, int(start_), int(end_))).reverse_complement()).upper()
@@ -399,8 +399,8 @@ def argparser():
                             help="lowest average depth of eccDNA [5]",
                             type=int, default=5)
     general.add_argument('-cm', "--consensus-model", dest='consensus_model',
-                            help="Medaka_consensus model : [pore]_[device]_[caller variant]_[caller version] [r941_min_hac_g507]",
-                            type=str, default='r941_min_hac_g507')
+                            help="Medaka_consensus model [r1041_e82_400bps_sup_v4.3.0]",
+                            type=str, default='r1041_e82_400bps_sup_v4.3.0')
     return parser
 
 def main(args):
