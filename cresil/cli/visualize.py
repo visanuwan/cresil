@@ -28,7 +28,7 @@ def format_merge_based1_region(merge_based1_region):
 def lenLoci(loci):
     length = 0
     for region in loci.split(','):
-        chrom, start, end = region.rsplit('_', 2)
+        chrom, start, end = region.rsplit('_', 3)[:3]
         length += int(end)-int(start)
     return length
 
