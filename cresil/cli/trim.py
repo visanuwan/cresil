@@ -543,7 +543,7 @@ def main(args):
             list_result = list(chain.from_iterable(list_pool_result))
             
             list_cols = ['readid', 'q_len', 'q_start', 'q_end', 'ref', 'r_start', 'r_end',
-                        'match', 'mapBlock', 'mapq', 'strand', 'qlenTrimmed', 'freqCov', 'order', 'has_repeat_pattern']
+                        'match', 'mapBlock', 'mapq', 'strand', 'qlenTrimmed', 'freqCov', 'order', 'CTC']
             df_trim = pd.DataFrame(list_result, columns=list_cols)
             
             if flag == 0:
@@ -566,7 +566,7 @@ def main(args):
         list_result = list(chain.from_iterable(list_pool_result))
         
         list_cols = ['readid', 'q_len', 'q_start', 'q_end', 'ref', 'r_start', 'r_end',
-                    'match', 'mapBlock', 'mapq', 'strand', 'qlenTrimmed', 'freqCov', 'order', 'has_repeat_pattern']
+                    'match', 'mapBlock', 'mapq', 'strand', 'qlenTrimmed', 'freqCov', 'order', 'ctc_read']
         df_trim = pd.DataFrame(list_result, columns=list_cols)
 
         if path.exists(oname_map):

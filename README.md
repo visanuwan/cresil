@@ -2,9 +2,9 @@
 
 CReSIL is a tool for detecting eccDNA from Nanopore reads.
 
-We are excited to release `V1.1.0`! This updates introduces R10 chemistries for sequence correction and variant calls, bug fixes, and overall performance improvement.
+Version `V1.2.0` is now available! This release focused on stability and performance.
 
-For a version history/changelog, please see [Releases](https://github.com/visanuwan/cresil/releases).
+For a complete list of changes, please see the [full changelog](https://github.com/visanuwan/cresil/releases).
 
 
 

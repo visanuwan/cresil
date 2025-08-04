@@ -253,7 +253,7 @@ def cal_skip_variant(tup_value):
     gname, merge_region, num_region, is_cyclic, assemGraph = tup_value
 
     lengthLoci = lenLoci(merge_region)
-    eccdna_status = 'cyclic' if is_cyclic == True else 'non-cyclic'
+    ctc = 'True' if is_cyclic == True else 'True'
 
     ## collect region lengths of overlapping reads
     total_base = 0
@@ -271,7 +271,7 @@ def cal_skip_variant(tup_value):
 
     expectCov = "{:.2f}".format((float(total_base) / lengthLoci))
 
-    list_tup_result = [(gname, merge_region, lengthLoci, num_region, eccdna_status, len(set(list_readid)), total_base, expectCov)]
+    list_tup_result = [(gname, merge_region, lengthLoci, num_region, ctc, len(set(list_readid)), total_base, expectCov)]
 
     return list_tup_result
 
@@ -283,7 +283,7 @@ def prepare_identify_seq(tup_value):
     fa_reads = pysam.FastaFile(fastaName)
 
     lengthLoci = lenLoci(merge_region)
-    eccdna_status = 'cyclic' if is_cyclic == True else 'non-cyclic'
+    ctc = 'True' if is_cyclic == True else 'False'
 
     ## create a subgraph folder
     assemFol = "{}/{}".format(assemGraph, gname)
@@ -325,7 +325,7 @@ def prepare_identify_seq(tup_value):
 
     expectCov = "{:.2f}".format((float(total_base) / lengthLoci))
 
-    list_tup_result = [(gname, merge_region, lengthLoci, num_region, eccdna_status, len(set(list_readid)), total_base, expectCov)]
+    list_tup_result = [(gname, merge_region, lengthLoci, num_region, ctc, len(set(list_readid)), total_base, expectCov)]
 
     return list_tup_result
 
@@ -337,12 +337,12 @@ def get_a_sequence(fa_path):
 
 def assemToGFA(tup_value):
     fa_path, tup_ = tup_value
-    ec_id, assembly_len, coverage, eccdna_status = tup_
+    ec_id, assembly_len, coverage, ctc = tup_
     seq = get_a_sequence(fa_path)
     
     gfaS = []
     gfaL = []
-    if eccdna_status == "cyclic":
+    if ctc == "True":
         gfaS.append(f"S\t{ec_id}\t{seq}\tLN:i:{assembly_len}\tdp:f:{coverage}")
         gfaL.append(f"L\t{ec_id}\t+\t{ec_id}\t+\t0M")
     else:
@@ -726,8 +726,8 @@ def main(args):
             list_identify_results += list(chain.from_iterable(list_pool_result))
 
         ## write a subGraph summary file
-        header = ['id', 'merge_region', 'merge_len', 'num_region', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
-        selected_header = ['id', 'merge_region', 'merge_len', 'num_region', 'can_be_solved', 'contain_selfloop', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
+        header = ['id', 'merge_region', 'merge_len', 'num_region', 'ctc', 'numreads', 'totalbase', 'coverage']
+        selected_header = ['id', 'merge_region', 'merge_len', 'num_region', 'can_be_solved', 'contain_selfloop', 'ctc', 'numreads', 'totalbase', 'coverage']
         df_temp_graph_summary = pd.DataFrame(list_identify_results, columns=header)
         df_final_graph_summary = pd.merge(left=df_graph_summary, right=df_temp_graph_summary, left_on='id', right_on='id', how='inner')
         df_final_graph_summary = df_final_graph_summary[selected_header]
@@ -737,7 +737,7 @@ def main(args):
         df_final_graph_summary.to_csv(write_path, sep='\t', index=None)
 
         ## write identified eccDNA summary
-        header = ['id', 'merge_region', 'merge_len', 'num_region', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
+        header = ['id', 'merge_region', 'merge_len', 'num_region', 'ctc', 'numreads', 'totalbase', 'coverage']
         df_identify_summary = df_final_graph_summary[header].copy()
         eccdna_final_path = "{}/eccDNA_final.txt".format(bname)
         df_identify_summary.to_csv(eccdna_final_path, sep='\t', index=None)
@@ -820,8 +820,8 @@ def main(args):
         list_chk_variant.append(tup_variant)
 
     ## write a subGraph summary file
-    header = ['id', 'merge_region', 'merge_len', 'num_region', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
-    selected_header = ['id', 'merge_region', 'merge_len', 'num_region', 'can_be_solved', 'contain_selfloop', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
+    header = ['id', 'merge_region', 'merge_len', 'num_region', 'ctc', 'numreads', 'totalbase', 'coverage']
+    selected_header = ['id', 'merge_region', 'merge_len', 'num_region', 'can_be_solved', 'contain_selfloop', 'ctc', 'numreads', 'totalbase', 'coverage']
     df_temp_graph_summary = pd.DataFrame(list_identify_results, columns=header)
     df_final_graph_summary = pd.merge(left=df_graph_summary, right=df_temp_graph_summary, left_on='id', right_on='id', how='inner')
     df_final_graph_summary = df_final_graph_summary[selected_header]
@@ -926,7 +926,7 @@ def main(args):
             shutil.copy(variant_path, dest_path)
     
     ## write identified eccDNA summary
-    header = ['id', 'merge_region', 'merge_len', 'num_region', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
+    header = ['id', 'merge_region', 'merge_len', 'num_region', 'ctc', 'numreads', 'totalbase', 'coverage']
     df_identify_summary = pd.DataFrame(list_identify_results, columns=header)
     df_identify_summary['merge_region'] = df_identify_summary['merge_region'].apply(lambda x: format_merge_region(x))
     df_identify_summary['combined_consensus_status'] = df_identify_summary.apply(lambda x: get_consensus_status(x, dict_medaka_seq_len), axis = 1)
@@ -957,8 +957,8 @@ def main(args):
                 ec_id = value['id']
                 assembly_len = value['consensus_len']
                 coverage = value['coverage']
-                eccdna_status = value['eccdna_status']
-                tup_ = (ec_id, assembly_len, coverage, eccdna_status)
+                ctc = value['ctc']
+                tup_ = (ec_id, assembly_len, coverage, ctc)
 
                 fa_path = "{}/{}/{}_consensus.fa".format(assemGraph, ec_id, ec_id)
 
@@ -975,8 +975,8 @@ def main(args):
                 ec_id = value['id']
                 assembly_len = value['consensus_len']
                 coverage = value['coverage']
-                eccdna_status = value['eccdna_status']
-                tup_ = (ec_id, assembly_len, coverage, eccdna_status)
+                ctc = value['ctc']
+                tup_ = (ec_id, assembly_len, coverage, ctc)
 
                 fa_path = "{}/{}/{}_consensus.fa".format(assemGraph, ec_id, ec_id)
 

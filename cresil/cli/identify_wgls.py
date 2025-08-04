@@ -28,7 +28,7 @@ from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 def lenLoci(loci):
     length = 0
     for region in loci.split(','):
-        chrom, start, end = region.rsplit('_', 2)
+        chrom, start, end, strand = region.rsplit('_', 3)
         length += int(end)-int(start)
     return length
 
@@ -256,7 +256,7 @@ def prepare_identify_seq(tup_value):
     fa_reads = pysam.FastaFile(fastaName)
 
     lengthLoci = lenLoci(merge_region)
-    eccdna_status = 'cyclic' if is_cyclic == True else 'non-cyclic'
+    ctc = 'True' if is_cyclic == True else 'False'
 
     ## create a subgraph folder
     assemFol = "{}/{}".format(assemGraph, gname)
@@ -298,7 +298,7 @@ def prepare_identify_seq(tup_value):
 
     expectCov = "{:.2f}".format((float(total_base) / lengthLoci))
 
-    list_tup_result = [(gname, merge_region, lengthLoci, num_region, eccdna_status, len(set(list_readid)), total_base, expectCov)]
+    list_tup_result = [(gname, merge_region, lengthLoci, num_region, ctc, len(set(list_readid)), total_base, expectCov)]
 
     return list_tup_result
 
@@ -816,8 +816,8 @@ def main(args):
         list_identify_results += list(chain.from_iterable(list_pool_result))
 
     ## write a subGraph summary file
-    header = ['id', 'merge_region', 'merge_len', 'num_region', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
-    selected_header = ['id', 'merge_region', 'merge_len', 'num_region', 'can_be_solved', 'contain_selfloop', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
+    header = ['id', 'merge_region', 'merge_len', 'num_region', 'ctc', 'numreads', 'totalbase', 'coverage']
+    selected_header = ['id', 'merge_region', 'merge_len', 'num_region', 'can_be_solved', 'contain_selfloop', 'ctc', 'numreads', 'totalbase', 'coverage']
     df_temp_graph_summary = pd.DataFrame(list_identify_results, columns=header)
     df_final_graph_summary = pd.merge(left=df_graph_summary, right=df_temp_graph_summary, left_on='id', right_on='id', how='inner')
     df_final_graph_summary = df_final_graph_summary[selected_header]
@@ -827,7 +827,7 @@ def main(args):
     df_final_graph_summary.to_csv(write_path, sep='\t', index=None)
 
     ## write identified eccDNA summary
-    header = ['id', 'merge_region', 'merge_len', 'num_region', 'eccdna_status', 'numreads', 'totalbase', 'coverage']
+    header = ['id', 'merge_region', 'merge_len', 'num_region', 'ctc', 'numreads', 'totalbase', 'coverage']
     df_identify_summary = df_final_graph_summary[header].copy()
     eccdna_final_path = "{}/eccDNA_final.txt".format(bname)
     df_identify_summary.to_csv(eccdna_final_path, sep='\t', index=None)
