@@ -103,7 +103,7 @@ cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fa
  - `cresil visualize` - generate Circos configuration files for specified eccDNA
 
 ## Sample data
-[References and simulated data](https://app.box.com/s/5leixacmp1xx8qs7qtcuyz93lgqpzgkn) for the user to go through the example of CReSIL pipeline and used in the CReSIL benchmarks.
+[References and simulated data](https://app.box.com/s/5leixacmp1xx8qs7qtcuyz93lgqpzgkn) for the user to go through the example of CReSIL pipeline and used in the CReSIL benchmarks. *** We encourage users to use a primary assembly without patches or alternative loci as a reference to reduce false positives and false negatives from predictions.
 - References
 - Simulated data
 
