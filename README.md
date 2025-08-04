@@ -107,7 +107,7 @@ cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fa
 
 ## Citation
 Please cite the following article if you use CReSIL in your research
-> Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard Arrey, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew, CReSIL: Accurate Identification of Extrachromosomal Circular DNA from Long-read Sequences, *Briefings in Bioinformatics.* 2022;, bbac422, https://doi.org/10.1093/bib/bbac422.<br>
+> Charles M. Burnham, Alongkorn Kurilung, Visanu Wanchai, Birgritte Regenberg, Jesus Delgado-Calle, Alexei G. Basnakian, Intawat Nookaew, An Enhancement of Extrachromosomal Circular DNA Enrichment and Amplification to Address the Extremely Low Overlap Between Replicates, bioRxiv 2025.06.28.662146; doi: https://doi.org/10.1101/2025.06.28.662146.<br>
 
 ## License and Copyright
 
