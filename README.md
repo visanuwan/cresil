@@ -2,7 +2,7 @@
 
 CReSIL is a tool for detecting eccDNA from Nanopore reads.
 
-Version `V1.2.0` is now available! This release focused on stability and performance.
+:sparkles: Version `V1.2.0` is now available! This release focused on stability and performance.
 
 For a complete list of changes, please see the [full changelog](https://github.com/visanuwan/cresil/releases).
 
@@ -22,6 +22,9 @@ pip install .
 ```
 
 ## Testing (Human eccDNA)
+For this demonstration, we use the `r941_min_hac_g507` model with a default breakpoint overlapping length of 50 bp. The required human reference genome can be loaded from [the Sample data section](#sample-data).
+> [!NOTE]
+> The default consensus model has been updated to `r1041_e82_400bps_sup_v4.3.0` since release `V1.1.0`
 ```
 ## Go to an example folder
 cd example
@@ -103,14 +106,16 @@ cresil identify_wgls -t 4 -r reference.mmi -fa reference.fa -fai reference.fa.fa
  - `cresil visualize` - generate Circos configuration files for specified eccDNA
 
 ## Sample data
-[References and simulated data](https://app.box.com/s/5leixacmp1xx8qs7qtcuyz93lgqpzgkn) for the user to go through the example of CReSIL pipeline and used in the CReSIL benchmarks. *** We encourage users to use a primary assembly without patches or alternative loci as a reference to reduce false positives and false negatives from predictions ***
+[References and simulated data](https://app.box.com/s/5leixacmp1xx8qs7qtcuyz93lgqpzgkn) for the user to go through the example of CReSIL pipeline and used in the CReSIL benchmarks.
+> [!WARNING]
+>We encourage users to use a primary assembly without patches or alternative loci as a reference to reduce false positives and false negatives from predictions
 
 ## Citation
 Please cite the following article if you use CReSIL in your research
 > Visanu Wanchai, Piroon Jenjareonpun, Thongpun Leangapichat, Gerard Arrey, Charles M Burnham, Maria C Tümmle, Jesus Delgado-Calle, Birgitte Regenberg, Intawat Nookaew, CReSIL: Accurate Identification of Extrachromosomal Circular DNA from Long-read Sequences, *Briefings in Bioinformatics.* 2022;, bbac422, https://doi.org/10.1093/bib/bbac422.<br>
 
 See our recent work using CReSIL `V1.2.0` at
-> Charles M. Burnham, Alongkorn Kurilung, Visanu Wanchai, Birgritte Regenberg, Jesus Delgado-Calle, Alexei G. Basnakian, Intawat Nookaew, An Enhancement of Extrachromosomal Circular DNA Enrichment and Amplification to Address the Extremely Low Overlap Between Replicates, bioRxiv 2025.06.28.662146; doi: https://doi.org/10.1101/2025.06.28.662146.<br>
+> Charles M. Burnham, Alongkorn Kurilung, Visanu Wanchai, Birgritte Regenberg, Jesus Delgado-Calle, Alexei G. Basnakian, Intawat Nookaew, An Enhancement of Extrachromosomal Circular DNA Enrichment and Amplification to Address the Extremely Low Overlap Between Replicates, *bioRxiv* 2025.06.28.662146; doi: https://doi.org/10.1101/2025.06.28.662146.<br>
 
 ## License and Copyright
 
